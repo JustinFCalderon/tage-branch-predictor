@@ -10,7 +10,7 @@ this file without an explicit note explaining why.
    Authoritative on the metric, the baseline, and the constraints.
 2. **The CBP-2 infrastructure and its `doc/index.html`** (2006). Authoritative on
    the predictor interface and trace format. Silent on storage budget.
-3. **The L-TAGE literature** (Seznec & Michaud). Authoritative on predictor design.
+3. **The TAGE literature** (Seznec & Michaud). Authoritative on predictor design.
 
 Where these disagree, the higher entry wins. Where all are silent, we decide and
 record the decision here.

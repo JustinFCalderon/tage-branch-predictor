@@ -1,0 +1,27 @@
+# label,tage-noalloc
+# date,2026-08-12T04:10:28Z
+# git,0546ec4,DIRTY
+# binary,build/predict
+trace,mpki
+164.gzip,15.057
+175.vpr,14.676
+176.gcc,18.279
+181.mcf,27.480
+186.crafty,12.360
+197.parser,15.444
+201.compress,9.157
+202.jess,8.526
+205.raytrace,3.264
+209.db,5.894
+213.javac,2.915
+222.mpegaudio,2.895
+227.mtrt,3.375
+228.jack,6.296
+252.eon,9.346
+253.perlbmk,6.032
+254.gap,8.626
+255.vortex,1.775
+256.bzip2,0.112
+300.twolf,21.511
+average,9.651
+average_exact,9.65100

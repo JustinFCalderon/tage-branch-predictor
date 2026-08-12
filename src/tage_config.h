@@ -54,6 +54,10 @@ inline constexpr std::size_t BIMODAL_BITS = BIMODAL_ENTRIES * BIMODAL_CTR_BITS;
 inline constexpr std::size_t TAGGED_BITS  = NUM_TAGGED * TAGGED_ENTRIES * TAGGED_ENTRY_BITS;
 inline constexpr std::size_t TOTAL_BITS   = BIMODAL_BITS + TAGGED_BITS;
 
+// Usefulness counters are halved every this many conditional branches, so an
+// entry that proved useful long ago cannot hold its slot forever.
+inline constexpr std::size_t U_AGING_PERIOD = 512 * 1024;
+
 // ------------------------------------------------------------------ budget --
 // Self-imposed, not required by the assignment. Reasoning: the stock gshare
 // baseline holds 32768 two-bit counters = 8 KiB of logical state (the sample

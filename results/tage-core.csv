@@ -1,0 +1,27 @@
+# label,tage-core
+# date,2026-08-12T04:29:40Z
+# git,0546ec4,DIRTY
+# binary,build/predict
+trace,mpki
+164.gzip,11.446
+175.vpr,10.551
+176.gcc,4.961
+181.mcf,13.227
+186.crafty,3.847
+197.parser,6.769
+201.compress,6.660
+202.jess,0.524
+205.raytrace,0.980
+209.db,2.628
+213.javac,1.306
+222.mpegaudio,1.288
+227.mtrt,1.019
+228.jack,0.883
+252.eon,0.453
+253.perlbmk,0.553
+254.gap,1.975
+255.vortex,0.347
+256.bzip2,0.046
+300.twolf,16.067
+average,4.276
+average_exact,4.27650

@@ -1,0 +1,27 @@
+# label,stock-gshare
+# date,2026-08-12T00:49:15Z
+# git,ca49e44,clean
+# binary,third_party/cbp2/src/predict
+trace,mpki
+164.gzip,12.473
+175.vpr,13.415
+176.gcc,11.254
+181.mcf,15.837
+186.crafty,5.837
+197.parser,10.008
+201.compress,7.831
+202.jess,1.562
+205.raytrace,2.756
+209.db,3.909
+213.javac,2.267
+222.mpegaudio,2.188
+227.mtrt,2.657
+228.jack,3.033
+252.eon,1.807
+253.perlbmk,2.554
+254.gap,3.926
+255.vortex,1.222
+256.bzip2,0.094
+300.twolf,21.489
+average,6.305
+average_exact,6.30595

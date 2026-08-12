@@ -1,0 +1,14 @@
+# build artifacts
+build/
+*.o
+*.a
+*.exe
+third_party/cbp2/src/predict
+src/predict
+tests/*_test
+
+# editor / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store

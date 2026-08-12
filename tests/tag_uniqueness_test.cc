@@ -13,6 +13,7 @@
 #include <cstdio>
 #include <cstdint>
 #include <cstddef>
+#include <vector>
 #include "../src/tage_indexer.h"
 
 using namespace tage;
@@ -36,6 +37,7 @@ static constexpr double THRESHOLD = 3.0 * IDEAL;              // ~0.0029
 
 int main() {
     int failures = 0;
+	const int CHECKS = 4;
 
     // Warm the history so the folds are in a realistic state.
     TageIndexer ix;
@@ -107,11 +109,39 @@ int main() {
         if (!ok) failures++;
     }
 
+	// ---- D: among PCs that COLLIDE in the index, tags must still differ -----
+    // The conditional version of C, and the one that matters. If index and tag
+    // draw on the same PC bits, an index collision implies a tag collision and
+    // the tag contributes nothing to cross-PC discrimination -- while C still
+    // reports a healthy rate, because most random PC pairs never collide.
+    {
+        const std::size_t T = NUM_TAGGED - 1;
+        const std::size_t N = std::size_t(1) << TAGGED_IDX_BITS;
+        std::vector<std::uint32_t> first(N, 0);
+        std::vector<char>          seen(N, 0);
+
+        int pairs = 0, collide = 0;
+        for (int s = 0; s < SAMPLES * 4 && pairs < 20000; ++s) {
+            const std::uint32_t pc = rnd_pc();
+            const std::uint32_t i  = ix.index(T, pc);
+            if (!seen[i]) { seen[i] = 1; first[i] = pc; continue; }
+            if (first[i] == pc) continue;
+            pairs++;
+            if (ix.tag(T, first[i]) == ix.tag(T, pc)) collide++;
+        }
+        const double rate = pairs ? double(collide) / pairs : 1.0;
+        const bool ok = rate < THRESHOLD;
+        std::printf("D  index-collide tag also collides:      %8.5f  (want <%.5f)  %s\n",
+                    rate, THRESHOLD, ok ? "PASS" : "FAIL");
+        std::printf("       (%d index-colliding PC pairs sampled)\n", pairs);
+        if (!ok) failures++;
+    }
+	
     std::printf("\nideal collision rate for a %zu-bit tag: %.5f\n", TAG_BITS, IDEAL);
     if (failures) {
-        std::printf("%d/3 tag properties FAILED\n", failures);
+        std::printf("%d/%d tag properties FAILED\n", failures, CHECKS);
         return 1;
     }
-    std::printf("all 3 tag properties passed\n");
+    std::printf("all %d tag properties passed\n", CHECKS);
     return 0;
 }

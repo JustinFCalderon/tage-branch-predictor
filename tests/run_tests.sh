@@ -5,7 +5,7 @@ cd "$(dirname "$0")"
 
 CXXBIN=${CXX:-g++}
 FLAGS="-std=c++17 -O2 -g -Wall -Wextra -Werror -fsanitize=address,undefined"
-TESTS="folded_history_test storage_test tag_uniqueness_test"
+TESTS="folded_history_test storage_test tag_uniqueness_test lookup_test"
 
 fail=0
 for t in $TESTS; do

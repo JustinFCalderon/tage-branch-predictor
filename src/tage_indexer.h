@@ -45,8 +45,30 @@ public:
     static constexpr std::uint32_t TAG_MASK =
         (std::uint32_t(1) << TAG_BITS) - 1;
 
+    // The PC is folded down before use, and index and tag use DIFFERENT shift
+    // schedules on purpose.
+    //
+    // Taking raw low bits loses the high address bits entirely: two branches
+    // 4 KiB apart differ only above bit 9 of (pc>>2) and would produce an
+    // identical index AND an identical tag. Worse, if both draw on the same PC
+    // bits then an index collision implies a tag collision at the same history,
+    // and the tag stops contributing anything to cross-PC discrimination.
+    // Different schedules break that implication (see check D).
+    static std::uint32_t fold_pc_index(std::uint32_t pc) {
+        std::uint32_t p = pc >> 2;
+        p ^= p >> 10;
+        p ^= p >> 20;
+        return p;
+    }
+    static std::uint32_t fold_pc_tag(std::uint32_t pc) {
+        std::uint32_t p = pc >> 2;
+        p ^= p >> 7;
+        p ^= p >> 17;
+        return p;
+    }
+
     std::uint32_t index(std::size_t table, std::uint32_t pc) const {
-        return ((pc >> 2) ^ idx_fold_[table].value()) & IDX_MASK;
+        return (fold_pc_index(pc) ^ idx_fold_[table].value()) & IDX_MASK;
     }
 
     // The tag answers: "was this entry allocated by the (PC, history) context
@@ -57,7 +79,7 @@ public:
     // bit. If the tag reused the index's fold, an index collision would imply a
     // tag collision and the tag would carry no information at all.
     std::uint32_t tag(std::size_t table, std::uint32_t pc) const {
-        const std::uint32_t p = pc >> 2;
+        const std::uint32_t p = fold_pc_tag(pc);
         return (p
                 ^  tag_fold_a_[table].value()
                 ^ (tag_fold_b_[table].value() << 1)

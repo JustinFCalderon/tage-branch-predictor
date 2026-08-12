@@ -53,8 +53,10 @@ int main() {
         TagePredictor p;
         for (std::size_t t = 0; t < NUM_TAGGED; ++t) p.install(t, PC, +1, 0);
         Lookup L = p.lookup(PC);
-        check(L.provider == 3, "all four: provider is T4");
-        check(L.altpred  == 2, "all four: altpred is T3");
+        //check(L.provider == 3, "all four: provider is T4");
+        //check(L.altpred  == 2, "all four: altpred is T3");
+		check(L.provider == int(NUM_TAGGED) - 1, "all installed: provider is the longest table");
+        check(L.altpred  == int(NUM_TAGGED) - 2, "all installed: altpred is the next longest");
     }
 
     // 5 -- the entry belongs to a CONTEXT, not a PC. Move the history and the

@@ -1,0 +1,27 @@
+# label,tage-8t-bim2k
+# date,2026-08-12T04:47:58Z
+# git,32d12f8,DIRTY
+# binary,build/predict
+trace,mpki
+164.gzip,11.697
+175.vpr,10.457
+176.gcc,5.320
+181.mcf,12.045
+186.crafty,3.702
+197.parser,7.033
+201.compress,6.785
+202.jess,0.555
+205.raytrace,0.555
+209.db,2.779
+213.javac,1.346
+222.mpegaudio,1.317
+227.mtrt,0.583
+228.jack,0.849
+252.eon,0.443
+253.perlbmk,0.405
+254.gap,2.033
+255.vortex,0.259
+256.bzip2,0.051
+300.twolf,15.470
+average,4.184
+average_exact,4.18420

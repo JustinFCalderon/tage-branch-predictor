@@ -44,7 +44,19 @@ struct Lookup {
 
     std::uint32_t bim_idx  = 0;
     bool          bim_pred = false;
+
+    bool provider_weak = false;   // newly allocated: u == 0 and counter weak
+    bool use_alt       = false;   // did we override the provider with altpred?
+    bool final_pred    = false;   // what we actually predicted
 };
+
+// use_alt_on_newalloc: a global signed counter, learned at runtime, deciding
+// whether a weak newly-allocated provider is worth trusting over an
+// established altpred. Without it, every allocation immediately overrides a
+// well-trained shorter-history entry with an entry carrying no evidence -- and
+inline constexpr int ALT_MIN = -(1 << (USE_ALT_CTR_BITS - 1));
+inline constexpr int ALT_MAX =  (1 << (USE_ALT_CTR_BITS - 1)) - 1;
+
 
 class TagePredictor {
 public:
@@ -83,10 +95,17 @@ public:
         L.alt_pred      = (L.altpred >= 0)
                         ? (tables_[L.altpred][L.idx[L.altpred]].ctr >= 0)
                         : L.bim_pred;
+
+        if (L.provider >= 0) {
+            const TaggedEntry& e = tables_[L.provider][L.idx[L.provider]];
+            L.provider_weak = (e.u == 0) && (e.ctr == 0 || e.ctr == -1);
+        }
+        L.use_alt    = L.provider_weak && (use_alt_ctr_ >= 0);
+        L.final_pred = L.use_alt ? L.alt_pred : L.provider_pred;
         return L;
     }
 
-    bool predict(const Lookup& L) const { return L.provider_pred; }
+    bool predict(const Lookup& L) const { return L.final_pred; }
 
     // Counter updates only. NO ALLOCATION YET -- entries are never created, so
     // no tagged table meaningfully matches and this is currently a bimodal
@@ -98,7 +117,16 @@ public:
         if (b > BIM_MAX) b = BIM_MAX;
         bimodal_[L.bim_idx] = std::uint8_t(b);
 
-        const bool correct = (L.provider_pred == taken);
+        // Allocation keys off what we ACTUALLY predicted, not what the provider
+        // would have said.
+        const bool correct = (L.final_pred == taken);
+
+        // Train the alt-on-new-allocation policy, but only on the cases it
+        // decides: a weak new provider that disagrees with its altpred.
+        if (L.provider >= 0 && L.provider_weak && L.provider_pred != L.alt_pred) {
+            if (L.alt_pred == taken) { if (use_alt_ctr_ < ALT_MAX) use_alt_ctr_++; }
+            else                     { if (use_alt_ctr_ > ALT_MIN) use_alt_ctr_--; }
+        }
 
         if (L.provider >= 0) {
             TaggedEntry& e = tables_[L.provider][L.idx[L.provider]];
@@ -107,11 +135,12 @@ public:
             if (c > CTR_MAX) c = CTR_MAX;
             e.ctr = std::int8_t(c);
 
-            // u moves ONLY when provider and altpred disagreed. Agreement
-            // proves nothing: the shorter entry would have said the same.
+            // u tracks whether the PROVIDER beat the altpred -- independent of
+            // whether we chose to use the provider's answer.
             if (L.provider_pred != L.alt_pred) {
-                if (correct) { if (e.u < U_MAX) e.u++; }
-                else         { if (e.u > 0)     e.u--; }
+                const bool provider_right = (L.provider_pred == taken);
+                if (provider_right) { if (e.u < U_MAX) e.u++; }
+                else                { if (e.u > 0)     e.u--; }
             }
         }
 
@@ -197,6 +226,7 @@ private:
     std::uint8_t  bimodal_[BIMODAL_ENTRIES];
     std::uint64_t branches_ = 0;
     std::uint32_t rng_ = 0x2545F491u;
+    int           use_alt_ctr_ = 0;
 };
 
 }  // namespace tage

@@ -13,10 +13,14 @@
 namespace tage {
 
 // ---------------------------------------------------------------- geometry --
-inline constexpr std::size_t NUM_TAGGED = 4;
+inline constexpr std::size_t NUM_TAGGED = 8;
+//inline constexpr std::size_t NUM_TAGGED = 4;
 
 // T0: tagless bimodal. Always matches, so there is always a prediction.
-inline constexpr std::size_t BIMODAL_IDX_BITS = 13;             // 8192 entries
+//inline constexpr std::size_t BIMODAL_IDX_BITS = 13;             // 8192 entries
+//inline constexpr std::size_t BIMODAL_IDX_BITS = 12;             // 4096 entries
+inline constexpr std::size_t BIMODAL_IDX_BITS = 11;             // 2048 entries
+
 inline constexpr std::size_t BIMODAL_CTR_BITS = 2;
 
 // T1..Tn: tagged tables.
@@ -29,8 +33,10 @@ inline constexpr std::size_t U_BITS          = 2;
 // The individual values are not load-bearing -- allocation migrates each branch
 // to whichever table suits it, so the series only has to COVER the distribution
 // of useful correlation distances, densely at the short end.
-inline constexpr std::size_t HIST_LEN[NUM_TAGGED] = { 5, 15, 45, 135 };
-inline constexpr std::size_t MAX_HIST = 135;
+//inline constexpr std::size_t HIST_LEN[NUM_TAGGED] = { 5, 15, 45, 135 };
+//inline constexpr std::size_t MAX_HIST = 135;
+inline constexpr std::size_t HIST_LEN[NUM_TAGGED] = { 5, 10, 20, 40, 80, 160, 320, 640 };
+inline constexpr std::size_t MAX_HIST = 640;
 
 // THREE folds, not two -- and the count being odd is load-bearing.
 //
@@ -52,7 +58,14 @@ inline constexpr std::size_t TAGGED_ENTRY_BITS = CTR_BITS + U_BITS + TAG_BITS;
 
 inline constexpr std::size_t BIMODAL_BITS = BIMODAL_ENTRIES * BIMODAL_CTR_BITS;
 inline constexpr std::size_t TAGGED_BITS  = NUM_TAGGED * TAGGED_ENTRIES * TAGGED_ENTRY_BITS;
-inline constexpr std::size_t TOTAL_BITS   = BIMODAL_BITS + TAGGED_BITS;
+
+// Global control state. Small, but it IS state -- omitting it from the
+// accounting is the same class of error as reporting storage for components
+// that were never built.
+inline constexpr std::size_t USE_ALT_CTR_BITS = 4;
+inline constexpr std::size_t MISC_BITS        = USE_ALT_CTR_BITS;
+
+inline constexpr std::size_t TOTAL_BITS = BIMODAL_BITS + TAGGED_BITS + MISC_BITS;
 
 // Usefulness counters are halved every this many conditional branches, so an
 // entry that proved useful long ago cannot hold its slot forever.

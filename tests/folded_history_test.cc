@@ -11,7 +11,8 @@
 #include "../src/global_history.h"
 #include "../src/folded_history.h"
 
-static constexpr std::size_t MAX_HISTORY = 256;
+//static constexpr std::size_t MAX_HISTORY = 256;
+static constexpr std::size_t MAX_HISTORY = 1024;
 using GH = GlobalHistory<MAX_HISTORY>;
 
 // history bit i -> fold bit (i mod width). This is the specification.
@@ -35,12 +36,18 @@ struct Case { std::size_t len, width; const char* name; };
 
 int main() {
     const Case cases[] = {
-        {  5, 10, "T1 index  (len 5,   width 10)" },
-        { 15, 10, "T2 index  (len 15,  width 10)" },
-        { 45, 10, "T3 index  (len 45,  width 10)" },
-        {135, 10, "T4 index  (len 135, width 10)" },
-        {135,  9, "T4 tag-b  (len 135, width 9)"  },
-        { 45,  9, "T3 tag-b  (len 45,  width 9)"  },
+        //{  5, 10, "T1 index  (len 5,   width 10)" },
+        //{ 15, 10, "T2 index  (len 15,  width 10)" },
+        //{ 45, 10, "T3 index  (len 45,  width 10)" },
+        //{135, 10, "T4 index  (len 135, width 10)" },
+        //{135,  9, "T4 tag-b  (len 135, width 9)"  },
+        //{ 45,  9, "T3 tag-b  (len 45,  width 9)"  },
+		{  5, 10, "T1 index  (len 5,   width 10)" },
+        { 40, 10, "T4 index  (len 40,  width 10)" },
+        {160, 10, "T6 index  (len 160, width 10)" },
+        {640, 10, "T8 index  (len 640, width 10)" },
+        {640,  9, "T8 tag-b  (len 640, width 9)"  },
+        {640,  8, "T8 tag-c  (len 640, width 8)"  },
     };
     const int N = sizeof(cases) / sizeof(cases[0]);
     const int STEPS = 20000;

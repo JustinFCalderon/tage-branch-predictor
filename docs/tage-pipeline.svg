@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 396" width="900" height="396" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11">
+  <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#5a6070"/></marker></defs>
+  <rect x="0" y="0" width="900" height="396" fill="#fdfcfa"/>
+  <rect x="20" y="30" width="400" height="68" rx="6" fill="#f4f1ec" stroke="#8b8578"/>
+  <text x="31" y="50" fill="#8b8578" font-weight="700" font-size="11">third_party/cbp2/</text>
+  <text x="31" y="67" fill="#5a6070" font-size="10">vendored 2006 framework + the 20 traces.</text>
+  <text x="31" y="81" fill="#5a6070" font-size="10">Its own commit. Never edited.</text>
+  <text x="437" y="70" fill="#5a6070" font-size="15">+</text>
+  <rect x="460" y="30" width="419" height="68" rx="6" fill="#e3ebf1" stroke="#1d4e6b"/>
+  <text x="471" y="50" fill="#1d4e6b" font-weight="700" font-size="11">src/</text>
+  <text x="471" y="67" fill="#5a6070" font-size="10">tage_config · global_history · folded_history</text>
+  <text x="471" y="81" fill="#5a6070" font-size="10">tage_indexer · tage_predictor · my_predictor</text>
+  <line x1="450" y1="98" x2="450" y2="132" stroke="#5a6070" marker-end="url(#a)"/>
+  <rect x="20" y="136" width="192" height="84" rx="6" fill="#d9eae5" stroke="#0f6e5a"/>
+  <text x="31" y="156" fill="#0f6e5a" font-weight="700" font-size="11">build_predict.sh</text>
+  <text x="31" y="173" fill="#5a6070" font-size="10">stages framework +</text>
+  <text x="31" y="187" fill="#5a6070" font-size="10">our my_predictor.h</text>
+  <text x="31" y="201" fill="#5a6070" font-size="10">into build/, compiles</text>
+  <rect x="242" y="136" width="192" height="84" rx="6" fill="#d9eae5" stroke="#0f6e5a"/>
+  <text x="253" y="156" fill="#0f6e5a" font-weight="700" font-size="11">build/predict</text>
+  <text x="253" y="173" fill="#5a6070" font-size="10">the binary. build/ is</text>
+  <text x="253" y="187" fill="#5a6070" font-size="10">gitignored — always</text>
+  <text x="253" y="201" fill="#5a6070" font-size="10">rebuilt, not committed</text>
+  <rect x="464" y="136" width="192" height="84" rx="6" fill="#d9eae5" stroke="#0f6e5a"/>
+  <text x="475" y="156" fill="#0f6e5a" font-weight="700" font-size="11">tools/sweep.sh</text>
+  <text x="475" y="173" fill="#5a6070" font-size="10">runs all 20 traces,</text>
+  <text x="475" y="187" fill="#5a6070" font-size="10">truncates like the spec,</text>
+  <text x="475" y="201" fill="#5a6070" font-size="10">writes provenance header</text>
+  <rect x="686" y="136" width="192" height="84" rx="6" fill="#f2dcd3" stroke="#a8431f"/>
+  <text x="697" y="156" fill="#a8431f" font-weight="700" font-size="11">results/*.csv</text>
+  <text x="697" y="173" fill="#5a6070" font-size="10">committed. commit hash</text>
+  <text x="697" y="187" fill="#5a6070" font-size="10">+ clean/dirty per file.</text>
+  <text x="697" y="201" fill="#5a6070" font-size="10">THE evidence.</text>
+  <line x1="216" y1="178" x2="238" y2="178" stroke="#5a6070" marker-end="url(#a)"/>
+  <line x1="438" y1="178" x2="460" y2="178" stroke="#5a6070" marker-end="url(#a)"/>
+  <line x1="660" y1="178" x2="682" y2="178" stroke="#5a6070" marker-end="url(#a)"/>
+  <text x="20" y="248" fill="#5a6070" font-size="10">verification — runs against src/ directly, independent of the build above</text>
+  <rect x="20" y="258" width="167" height="78" rx="6" fill="#f5ead0" stroke="#b8860b"/>
+  <text x="31" y="278" fill="#b8860b" font-weight="700" font-size="10">run_tests.sh</text>
+  <text x="31" y="295" fill="#5a6070" font-size="10">-Werror plus</text>
+  <text x="31" y="309" fill="#5a6070" font-size="10">ASan and UBSan</text>
+  <rect x="193" y="258" width="167" height="78" rx="6" fill="#f5ead0" stroke="#b8860b"/>
+  <text x="204" y="278" fill="#b8860b" font-weight="700" font-size="10">folded_history</text>
+  <text x="204" y="295" fill="#5a6070" font-size="10">incremental fold ==</text>
+  <text x="204" y="309" fill="#5a6070" font-size="10">from-scratch fold,</text>
+  <text x="204" y="323" fill="#5a6070" font-size="10">every step</text>
+  <rect x="366" y="258" width="167" height="78" rx="6" fill="#f5ead0" stroke="#b8860b"/>
+  <text x="377" y="278" fill="#b8860b" font-weight="700" font-size="10">storage</text>
+  <text x="377" y="295" fill="#5a6070" font-size="10">budget is a</text>
+  <text x="377" y="309" fill="#5a6070" font-size="10">static_assert — over-</text>
+  <text x="377" y="323" fill="#5a6070" font-size="10">budget won’t compile</text>
+  <rect x="539" y="258" width="167" height="78" rx="6" fill="#f5ead0" stroke="#b8860b"/>
+  <text x="550" y="278" fill="#b8860b" font-weight="700" font-size="10">tag_uniqueness</text>
+  <text x="550" y="295" fill="#5a6070" font-size="10">4 properties vs the</text>
+  <text x="550" y="309" fill="#5a6070" font-size="10">birthday floor for</text>
+  <text x="550" y="323" fill="#5a6070" font-size="10">a 10-bit tag</text>
+  <rect x="712" y="258" width="167" height="78" rx="6" fill="#f5ead0" stroke="#b8860b"/>
+  <text x="723" y="278" fill="#b8860b" font-weight="700" font-size="10">lookup + alloc</text>
+  <text x="723" y="295" fill="#5a6070" font-size="10">provider/altpred</text>
+  <text x="723" y="309" fill="#5a6070" font-size="10">selection, and the</text>
+  <text x="723" y="323" fill="#5a6070" font-size="10">allocation policy</text>
+  <text x="20" y="360" fill="#5a6070" font-size="10">predict.cc resolves #include "my_predictor.h" relative to its own directory — staging both into build/ is</text>
+  <text x="20" y="376" fill="#5a6070" font-size="10">the only way to substitute ours without editing vendored code, which is why third_party/ stays pristine</text>
+</svg>

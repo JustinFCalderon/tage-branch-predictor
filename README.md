@@ -147,6 +147,8 @@ is the same class of error this project exists to avoid.
 
 ## Reproducing
 
+![Code and build pipeline](docs/tage-pipeline.svg)
+
 Requires a POSIX environment with `g++`, `make` and `bzip2`.
 
     tests/run_tests.sh                        # build and run all tests

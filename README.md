@@ -51,6 +51,8 @@ values were reproduced exactly before any of this was built. See
 
 ## Design
 
+![Code and build pipeline](docs/tage-pipeline.svg)
+
 **Geometry.** A tagless bimodal table plus 8 tagged tables at geometrically
 increasing global-history lengths, `L(i) = round(a^(i-1) * L(1))` with
 `L(1) = 5` and `a = 2`: **5, 10, 20, 40, 80, 160, 320, 640**. Every table is

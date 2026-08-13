@@ -1,7 +1,5 @@
 # TAGE Branch Predictor
 
-![Code and build pipeline](docs/tage-pipeline.svg)
-
 A TAgged GEometric-history-length branch predictor built against the CBP-2
 framework, rebuilt from the published design with a measured baseline, a
 storage budget enforced at compile time, and a test suite that verifies the

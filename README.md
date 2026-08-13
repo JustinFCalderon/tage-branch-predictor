@@ -1,6 +1,6 @@
 # TAGE Branch Predictor
 
-![Predictor datapath](docs/tage-datapath.svg)
+![Code and build pipeline](docs/tage-pipeline.svg)
 
 A TAgged GEometric-history-length branch predictor built against the CBP-2
 framework, rebuilt from the published design with a measured baseline, a
@@ -51,7 +51,7 @@ values were reproduced exactly before any of this was built. See
 
 ## Design
 
-![Code and build pipeline](docs/tage-pipeline.svg)
+![Predictor datapath](docs/tage-datapath.svg)
 
 **Geometry.** A tagless bimodal table plus 8 tagged tables at geometrically
 increasing global-history lengths, `L(i) = round(a^(i-1) * L(1))` with
